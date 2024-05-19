@@ -1,36 +1,49 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>  // Include this for stringstream
 #include "CaesarCipher.h"
 #include "XORCipher.h"
 #include "FileProcessor.h"
 
 using namespace std;
 
-void ProcessFile(const string& inputPath, const string& outputPath, int caesarShift, char xorKey, bool isEncryption){
-    ifstream inputFile(inputPath);
-    ofstream outputFile(outputPath);
+void ProcessFile(const string &inputPath, const string &outputPath, int caesarShift, char xorKey, bool isEncryption)
+{
+    ifstream inputFile(inputPath, ios::binary);
+    ofstream outputFile(outputPath, ios::binary);
 
-    if (!inputFile.is_open()) {
+    stringstream buffer;
+    buffer << inputFile.rdbuf();
+    string message = buffer.str();
+
+    if (!inputFile.is_open())
+    {
         cerr << "Error: File " << inputPath << " not found.\n";
         return;
     }
-    if (!outputFile.is_open()) {
+    if (!outputFile.is_open())
+    {
         cerr << "Error: File " << outputPath << " could not be opened for writing.\n";
-        inputFile.close();  // Make sure to close the input file if output file opening fails
+        inputFile.close(); // Make sure to close the input file if output file opening fails
         return;
+    }
+
+    string processed = message;
+    if (isEncryption)
+    {
+        processed = CaesarCipher(processed, caesarShift, true);
+        processed = XORCipher(processed, xorKey);
+    }
+    else
+    {
+        processed = XORCipher(processed, xorKey);
+        processed = CaesarCipher(processed, caesarShift, false);
     }
 
     cout << (isEncryption ? "Encrypting" : "Decrypting") << " file: " << inputPath << "\n";
 
-    string message;
-    getline(inputFile, message);
-
-    //Apply Caesar Cipher
-    string caesarProcessed = CaesarCipher(message, caesarShift, isEncryption);
-    // Apply XOR Cipher
-    string xorProcessed = XORCipher(caesarProcessed, xorKey);
-
-    outputFile << xorProcessed;
+    
+    outputFile << processed;
 
     inputFile.close();
     outputFile.close();
