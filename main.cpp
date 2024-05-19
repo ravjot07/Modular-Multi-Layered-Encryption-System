@@ -5,15 +5,16 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-    if (argc !=4)
+    if (argc !=5)
     {
-        cerr << "Usage: " << argv[0] << " <file> <-e|-d> <caesar_shift> \n";
+        cerr << "Usage: " << argv[0] << " <file> <-e|-d> <caesar_shift> <xor_key> \n";
         return 1;
     }
 
     string inputPath = argv[1];
     string operation = argv[2];
     int caesarShift = stoi(argv[3]);
+    char xorKey = argv[4][0];
 
     bool isEncryption = (operation == "-e");
 
@@ -26,7 +27,7 @@ int main(int argc, char* argv[]){
 
     cout << "Opening files.\n";
 
-    ProcessFile(inputPath, outputPath, caesarShift, isEncryption);
+    ProcessFile(inputPath, outputPath, caesarShift, xorKey, isEncryption);
 
     return 0;
     

@@ -1,11 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include "CaesarCipher.h"
+#include "XORCipher.h"
 #include "FileProcessor.h"
 
 using namespace std;
 
-void ProcessFile(const string& inputPath, const string& outputPath, int caesarShift, bool isEncryption){
+void ProcessFile(const string& inputPath, const string& outputPath, int caesarShift, char xorKey, bool isEncryption){
     ifstream inputFile(inputPath);
     ofstream outputFile(outputPath);
 
@@ -26,8 +27,10 @@ void ProcessFile(const string& inputPath, const string& outputPath, int caesarSh
 
     //Apply Caesar Cipher
     string caesarProcessed = CaesarCipher(message, caesarShift, isEncryption);
+    // Apply XOR Cipher
+    string xorProcessed = XORCipher(caesarProcessed, xorKey);
 
-    outputFile << caesarProcessed;
+    outputFile << xorProcessed;
 
     inputFile.close();
     outputFile.close();
