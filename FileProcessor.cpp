@@ -5,10 +5,11 @@
 #include "XORCipher.h"
 #include "FileProcessor.h"
 #include "VigenereCipher.h"
+#include "TranspositionCipher.h"
 
 using namespace std;
 
-void ProcessFile(const string &inputPath, const string &outputPath, int caesarShift, char xorKey, const string& vigenereKey, bool isEncryption)
+void ProcessFile(const string &inputPath, const string &outputPath, int caesarShift, char xorKey, const string& vigenereKey, const vector<int>& transpositionKey, bool isEncryption)
 {
     ifstream inputFile(inputPath, ios::binary);
     ofstream outputFile(outputPath, ios::binary);
@@ -36,9 +37,11 @@ void ProcessFile(const string &inputPath, const string &outputPath, int caesarSh
         processed = CaesarCipher(processed, caesarShift, true);
         processed = XORCipher(processed, xorKey);
         processed = VigenereCipher(processed, vigenereKey, true);
+        processed = TranspositionCipher(processed, transpositionKey, true);
     }
     else
     {
+        processed = TranspositionCipher(processed, transpositionKey, false);
         processed = VigenereCipher(processed, vigenereKey, false);
         processed = XORCipher(processed, xorKey);
         processed = CaesarCipher(processed, caesarShift, false);
