@@ -21,19 +21,18 @@ The system is designed to demonstrate the core concepts of C++ while providing a
 
 ## File Structure
 ```.
-├── src
-│   ├── CaesarCipher.cpp
-│   ├── CaesarCipher.h
-│   ├── XORCipher.cpp
-│   ├── XORCipher.h
-│   ├── VigenereCipher.cpp
-│   ├── VigenereCipher.h
-│   ├── TranspositionCipher.cpp
-│   ├── TranspositionCipher.h
-│   ├── FileProcessor.cpp
-│   ├── FileProcessor.h
-│   └── main.cpp
-└── README.md` 
+  ├── CaesarCipher.cpp
+  ├── CaesarCipher.h
+  ├── XORCipher.cpp
+  ├── XORCipher.h
+  ├── VigenereCipher.cpp
+  ├── VigenereCipher.h
+  ├── TranspositionCipher.cpp
+  ├── TranspositionCipher.h
+  ├── FileProcessor.cpp
+  ├── FileProcessor.h
+  └── main.cpp
+  ── README.md` 
 ```
 ## Dependencies
 
